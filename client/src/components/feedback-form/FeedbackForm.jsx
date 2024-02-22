@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { Radio, Group } from "@mantine/core";
@@ -222,7 +222,7 @@ const FeedbackForm = () => {
         </div>
       </Modal>
 
-      <Button variant="default" onClick={open}>Open modal</Button>
+      <Button variant="default" onClick={open} className="bg-blue-400 h-[50px] w-[31vh] text-[16px] rounded-lg hover:bg-blue-600 tracking-wide">Open Feedback Form</Button>
     </div>
   );
 };

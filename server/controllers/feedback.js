@@ -33,7 +33,7 @@ const feedback = async (req, res) => {
         const result = sentiment.analyze(review);  
         console.log(result);      
         
-        res.status(200).json({ message: "Feedback received" });
+        res.status(200).json({ message: "Feedback received" , summary : summary});
 
     } catch (err) {
         res.status(500).json({ message: err.message });

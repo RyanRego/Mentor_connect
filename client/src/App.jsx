@@ -87,7 +87,7 @@ const App = () => {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
 
-                <Route path="/Notification" element={<FeedbackForm/>}/>
+                <Route path="/feedback" element={<FeedbackForm/>}/>
                 <Route path="/dashboard" element={<MentorDashboard />} />
 
                 <Route path="/room/:roomId" element={<MentorCall/>}/>

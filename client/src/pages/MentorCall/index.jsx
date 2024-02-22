@@ -4,13 +4,20 @@ import { useParams } from "react-router-dom";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import * as faceapi from "face-api.js";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import {useSelector} from 'react-redux';
+import FeedbackForm from "../../components/feedback-form/FeedbackForm";
+
 const MentorCall = () => {
+  const user = useSelector((state) => state.user)
   const { roomId } = useParams();
+  const navigate = useNavigate();
   const videoRef = useRef(null); // Reference to the video element // To track video stream activation
   const [error, setError] = useState(null); // To store any errors
   // const [btnPresses, setBtnPressed] = useState(false);
   const [noFace, setNoFace] = useState(0);
   const [room, setRoom] = useState(true);
+  const [showForm,setShowForm] = useState(false);
 
   // Load face detection models (moved outside myMeeting for reusability)
   useEffect(() => {
@@ -40,6 +47,8 @@ const MentorCall = () => {
   };
 
   const faceMyDetect = () => {
+    const getRole = localStorage.getItem('role')
+    console.log(getRole);
     setInterval(async () => {
       const detections = await faceapi.detectAllFaces(
         videoRef.current,
@@ -96,8 +105,17 @@ const MentorCall = () => {
         setRoom((prevState) => !prevState);
       },
       onLeaveRoom : () => {
+        setShowForm(true)
         console.log("Room closed successfuly");
         setRoom((prevState) => !prevState);
+        if (videoRef.current) {
+          videoRef.current.pause();
+          videoRef.current.srcObject = null;
+        }
+        if(user?.currentUser?.role === 'mentee')
+        {
+            navigate('/feedback');
+        }
       }
     });
   };
@@ -112,7 +130,7 @@ const MentorCall = () => {
         className="hidden"
       ></video>
       <div className="w-full min-h-[20vh] flex flex-col items-center justify-center gap-7">
-        <div className="w-[60%] min-h-[90%] border-2 border-rose-500 rounded-lg">
+        {!showForm && <div className="w-[60%] min-h-[90%] border-2 border-rose-500 rounded-lg">
           <div className="text-justify w-full h-full p-5">
             <b> Dear Mentor,</b>
             <br />
@@ -148,7 +166,10 @@ const MentorCall = () => {
             <br />
             <b>Mentor-Connect team</b>
           </div>
-        </div>
+        </div>}
+        {
+          showForm && <FeedbackForm/>
+        }
         {/* {
           setBtnPressed && (
             <button className="w-[200px] h-[40px] bg-blue-400 rounded-md text-white font-semibold" onClick={handleRefresh}>Agree and Continue</button>
