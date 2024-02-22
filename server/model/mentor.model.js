@@ -45,7 +45,26 @@ const mentorSchema = new Schema({
     isFormFilled: {
         type: Boolean,
         default: false
-    },},
+    },
+    sessionRequest: [{
+        id:String,
+        user:String,
+        date:Date,
+        time:String,
+        status:String,
+    }],
+    notifications: {
+        type: [{
+            id: String,
+            status: String,
+            mentee: String,
+            message: String,
+            time: String,
+            date: String,
+            code: String,
+        }],
+    },
+},
     {
         timestamps: true
     }

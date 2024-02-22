@@ -1,26 +1,53 @@
-import React, {useState} from "react";
+/* eslint-disable react/prop-types */
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const MentorAllowCard = () => {
+const MentorAllowCard = ({item}) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const userId = user.currentUser.mentor._id;
   console.log(userId);
+  const [requestor, setRequestor] = useState();
 
-  const handleClick = () => {
+  const onAccepting = () => {
     //we have to navigate to specific route
-    if(userId)
+    const code = Math.floor(Math.random() * 1000000);
+    axios.post('/request/acceptRequest', {
+      mentorId: userId, 
+      requestorId:requestor?._id,
+      time: item.time,
+      date: item.date,
+      code: code,
+    })
+
+    if(code)
     {
-      navigate(`/room/${userId}`);
+      navigate(`/room/${code}`);
     }
   }
+
+  const fetchRequestor = async () => {  
+    axios.post('/getallmentors/getRequestor', {userId: item.user}).then((res) => {
+      console.log(res.data);
+      setRequestor(res.data);
+    }
+    ).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  useEffect(()=>{
+    fetchRequestor();
+  },[])
+
   return (
     <div className="flex flex-col gap-6 md:flex-row justify-between w-full border-2 border-gray-300 hover:border-blue-300 shadow-sm rounded-lg p-5">
       <div>
         <div className="flex gap-2">
           <h1 className="font-semibold text-blue-400">Request from:</h1>
-          <h1 className="font-semibold">John Dae</h1>
+          <h1 className="font-semibold">{requestor?.firstName} {requestor?.lastName}</h1>
         </div>
 
         <div className="mt-4">
@@ -40,7 +67,7 @@ const MentorAllowCard = () => {
       </div>
 
       <div className="flex gap-6 items-center">
-        <button className="px-4 h-9 bg-green-500 text-white font-semibold rounded-lg" onClick={handleClick}>
+        <button className="px-4 h-9 bg-green-500 text-white font-semibold rounded-lg" onClick={onAccepting}>
           Accept
         </button>
         <button className="px-4 h-9 bg-red-500 text-white font-semibold rounded-lg">

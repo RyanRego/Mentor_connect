@@ -39,7 +39,18 @@ const menteeSchema = new Schema({
     },
     needs: {
         type: [String],
-    },},
+    },
+    notifications: {
+        type: [{
+            status: String,
+            mentor: String,
+            message: String,
+            time: String,
+            date: String,
+            code: String,
+        }],
+    },
+},
     {
         timestamps: true
     }
