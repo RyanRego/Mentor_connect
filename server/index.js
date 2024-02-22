@@ -2,13 +2,16 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import mentorAuth from "./routes/mentor.auth.route.js"; 
-import menteeAuth from "./routes/mentee.auth.route.js";
-import menteeProfileEdit from "./routes/mentee.Info.route.js";
-import mentorProfileEdit from "./routes/mentor.info.route.js";
-import getMenteeProfileData from "./routes/mentee.data.route.js";
-import getMentorProfileData from "./routes/mentor.data.route.js";
+import mentorAuth from "./routes/mentor/auth.js"; 
+import menteeAuth from "./routes/mentee/auth.js";
+import menteeProfileEdit from "./routes/mentee/Info.js";
+import mentorProfileEdit from "./routes/mentor/info.js";
+import getMenteeProfileData from "./routes/mentee/data.js";
+import getMentorProfileData from "./routes/mentor/data.js";
 import getAllMentorsProfile from "./routes/getmentors.js";
+import requestMentor from "./routes/mentee/requestmentor.js"
+import getAllSessions from "./routes/mentor/dashboard.js"
+import onRequesting from "./routes/requests.js"
 
 const app = express();
 app.use(cors());    
@@ -34,6 +37,11 @@ app.use('/api/data/mentee',getMenteeProfileData);
 app.use('/api/data/mentor',getMentorProfileData);
 
 app.use('/api/getallmentors',getAllMentorsProfile);
+
+app.use('/api/requestmentor',requestMentor);
+app.use('/api/requestmentor',getAllSessions);
+
+app.use('/api/request',onRequesting);
 
 app.listen(PORT, () => {
     console.log(`Server listening on port : ${PORT}`);

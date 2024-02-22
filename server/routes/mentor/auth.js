@@ -1,5 +1,5 @@
 import express from 'express';
-import {signup, login,google} from '../controllers/mentee.auth.controller.js';
+import {signup, login,google} from '../../controllers/mentor/auth.js';
 
 const router = express.Router();
 

@@ -1,9 +1,9 @@
 // const bcrypt = require('bcryptjs');
 import bcrypt from 'bcryptjs';
 // const User = require('../model/user.model');
-import Mentor from '../model/mentor.model.js';
+import Mentee from '../../model/mentee.model.js';
 // const { errorHandler } = require('../utils/error');
-import { errorHandler } from '../utils/error.js';
+import { errorHandler } from '../../utils/error.js';
 // const jwt = require('jsonwebtoken');
 import jwt from 'jsonwebtoken';
 // const nodemailer = require('nodemailer');
@@ -16,19 +16,19 @@ const signup = async (req, res,next) => {
         return;
     }
     try {
-        const mentor = await Mentor.findOne({email})
-        if (mentor) {
-            return res.status(400).json({msg: 'Mentor already exists'});
+        const mentee = await Mentee.findOne({email})
+        if (mentee) {
+            return res.status(400).json({msg: 'Mentee already exists'});
         }
         const hashedPassword = bcrypt.hashSync(password, 10);
-        const newMentor = new Mentor({
+        const newMentee = new Mentee({
             username,
             email,
             password: hashedPassword, 
         });
 
-        await newMentor.save()
-        res.json({msg: 'mentor added successfully'});
+        await newMentee.save()
+        res.json({msg: 'mentee added successfully'});
     } catch (error) {
         next(error);
         return;
@@ -42,27 +42,26 @@ const login = async (req, res, next) => {
         next(errorHandler(400, 'All fields are required'));
     }
     try {
-        const mentor = await Mentor.findOne({email});
-        if (!mentor) {
+        const mentee = await Mentee.findOne({email});
+        if (!mentee) {
             next(errorHandler(400, 'Invalid credentials'));
             return;
         }
-        const validPassword = bcrypt.compareSync(password, mentor.password);
+        const validPassword = bcrypt.compareSync(password, mentee.password);
         if (!validPassword) {
             next(errorHandler(400, 'Invalid passord'));
             return;
         }
 
-        const {password: pass, ...rest} = mentor._doc;
-        console.log(rest);
+        const {password: pass, ...rest} = mentee._doc;
         const token = jwt.sign({
-            id:mentor._id.toString()
+            id:mentee._id.toString()
         },
         process.env.JWT_SECRET,
         {
             expiresIn: '1d'
         })
-        res.json({msg: 'Login successful', token:token, mentor:rest});
+        res.json({msg: 'Login successful', token:token, mentee:rest});
     }
     catch (error) {
         next(errorHandler(500, 'Internal server error'));
@@ -77,26 +76,26 @@ const google = async (req,res,next) => {
             next(errorHandler(400, 'All fields are required'));
             return;
         }
-        const mentor = await Mentor.findOne({email});
-        if(mentor){
-            const token = jwt.sign({id:mentor._id},process.env.JWT_SECRET,{expiresIn: '1d'})
-            const {password, ...rest} = mentor._doc;
-            res.json({msg: 'Login successful', token:token, mentor:rest});
+        const mentee = await Mentee.findOne({email});
+        if(mentee){
+            const token = jwt.sign({id:mentee._id},process.env.JWT_SECRET,{expiresIn: '1d'})
+            const {password, ...rest} = mentee._doc;
+            res.json({msg: 'Login successful', token:token, mentee:rest});
         }
         else{
             const generatedPassword = email+1234;
             const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
             const name = username.toLowerCase().split(' ').join('')
-            const newMentor = new Mentor({
+            const newMentee = new Mentee({
                 username: name,
                 email,
                 password: hashedPassword,
-                profilePicture: googlePhotoUrl,
+                profilePicture: googlePhotoUrl
             });
-            newMentor.save()
-            const token = jwt.sign({id:newMentor._id.toString()},process.env.JWT_SECRET,{expiresIn: '1d'})
-            const {password, ...rest} = newMentor._doc;
-            res.json({msg: 'Mentor added successfully', token:token, mentor:rest});
+            newMentee.save()
+            const token = jwt.sign({id:newMentee._id.toString()},process.env.JWT_SECRET,{expiresIn: '1d'})
+            const {password, ...rest} = newMentee._doc;
+            res.json({msg: 'Mentee added successfully', token:token, mentee:rest});
         }
     }catch(error){
         next(errorHandler(500, 'Internal server error'));

@@ -1,5 +1,5 @@
 import express from 'express';
-import {getMenteeProfileData} from '../controllers/mentee.data.controller.js';
+import {getMenteeProfileData} from '../../controllers/mentee/data.js';
 const router = express.Router();
 
 router.post('/get-mentee-profile-data',getMenteeProfileData)

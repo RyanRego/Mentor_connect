@@ -3,8 +3,11 @@ import FeedCard from "../../components/Card/FeedCard";
 // import MentorCard from "../../components/Mentor/MentorCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const FeedPage = () => {
+  const user = useSelector((state)=>state.user)
+  console.log(user)
 
   const [mentors, setMentors] = useState([]);
   const getAllMentors = async () => {
@@ -45,7 +48,7 @@ const FeedPage = () => {
       <div className="mt-11 flex flex-col gap-4">
         {
           mentors.length > 0 ? mentors?.map((mentor) => (
-            <FeedCard key={mentor._id} mentor={mentor} />
+            <FeedCard key={mentor._id} user={user} mentor={mentor} />
           )) : <h1>Loading...</h1>
         }
       </div>

@@ -1,4 +1,4 @@
-import Mentee from '../model/mentee.model.js';
+import Mentee from '../../model/mentee.model.js';
 const getMenteeProfileData = async (req, res) => {
     const {email} = req.body;
     try {

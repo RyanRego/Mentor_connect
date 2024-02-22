@@ -1,4 +1,4 @@
-import Mentor from '../model/mentor.model.js';
+import Mentor from '../../model/mentor.model.js';
 const getMentorProfileData = async (req, res) => {
     const {email} = req.body;
     try {
