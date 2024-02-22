@@ -7,8 +7,7 @@ import { useSelector } from "react-redux";
 
 const FeedPage = () => {
   const user = useSelector((state)=>state.user)
-  console.log(user)
-
+  console.log(user) 
   const [mentors, setMentors] = useState([]);
   const getAllMentors = async () => {
     try {
@@ -21,7 +20,14 @@ const FeedPage = () => {
     }
   }
 
+  const getRecommendedmentors = async() => {
+    axios.post('/get-recommended',{
+      needs:user?.currentUser?.needs
+    })
+  }
+
   useEffect(()=>{
+    getRecommendedmentors()
     getAllMentors()
   },[])
 

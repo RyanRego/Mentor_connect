@@ -1,9 +1,12 @@
 import axios from "axios";
 import MenteeCard from "../components/Mentee/MenteeCard";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { signInSuccess } from "../redux/user/userSlice";
+
 const MenteeProfilePage = () => {
 
+  const dispatch = useDispatch();
   const [mentee, setMentee] = useState({});//[1
   const user =useSelector((state) => state.user);
   const getMentor = async () => {
@@ -13,6 +16,7 @@ const MenteeProfilePage = () => {
       }).then((res) => {
         console.log(res.data);
         setMentee(res.data);
+        dispatch(signInSuccess(res?.data));
       }
       );
     } catch (error) {
