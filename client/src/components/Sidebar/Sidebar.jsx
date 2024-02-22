@@ -120,7 +120,7 @@ export function Sidebar({ toggle }) {
           className={classes.link}
           onClick={(event) => {
             event.preventDefault();
-            navigate(`/${getRole}/${user?.currentUser[`${getRole}`].email}` || "/login");
+            navigate(`/${getRole}/${user?.currentUser.email}` || "/login");
           }}
         >
           <img

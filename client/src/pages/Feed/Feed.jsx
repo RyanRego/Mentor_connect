@@ -24,6 +24,7 @@ const FeedPage = () => {
     axios.post('/get-recommended',{
       needs:user?.currentUser?.needs
     })
+    console.log(user?.currentUser?.needs)
   }
 
   useEffect(()=>{

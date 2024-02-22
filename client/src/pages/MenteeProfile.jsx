@@ -12,7 +12,7 @@ const MenteeProfilePage = () => {
   const getMentor = async () => {
     try {
       axios.post("/data/mentee/get-mentee-profile-data",{
-        email:user?.currentUser?.mentee?.email 
+        email:user?.currentUser?.email 
       }).then((res) => {
         console.log(res.data);
         setMentee(res.data);

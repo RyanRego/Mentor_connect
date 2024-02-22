@@ -12,7 +12,7 @@ const MentorProfilePage = () => {
   const getMentor = async () => {
     try {
       axios.post("/data/mentor/get-mentor-profile-data", {
-        email: user?.currentUser?.mentor?.email,
+        email: user?.currentUser?.email,
       }).then((res) => {
         console.log(res.data);
         setMentor(res.data);
