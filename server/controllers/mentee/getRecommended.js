@@ -12,12 +12,11 @@ const getRecommended = async (req,res) =>{
             const similarity = sharedTopics.length / (needs.length + (mentor?.proficiency?.length || 0) - sharedTopics.length);
             return { mentor, similarity };
         });
-        
           console.log("hie")
           const recommended =  _.orderBy(results, ['similarity'], ['desc']);
-        //   console.log(recommended);
+          console.log(recommended);
         res.status(200).json({
-            
+            recommended
         })
     }catch(error){
         return res.status(500).json({msg: 'Server error'});

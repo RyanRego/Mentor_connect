@@ -36,7 +36,6 @@ export function Sidebar({ toggle }) {
     <nav className={`${classes.navbar} h-[100vh]`}>
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
-
           {/* <MantineLogo size={28} /> */}
           <div className="font-bold text-[20px]">Mentor-Connect</div>
           <Code
@@ -83,7 +82,6 @@ export function Sidebar({ toggle }) {
           className={classes.link}
           data-active={"join" === active || undefined}
           onClick={(event) => {
-
             onClickHandler("/applications", event);
           }}
         >
@@ -97,10 +95,21 @@ export function Sidebar({ toggle }) {
             onClickHandler("/edit", event);
           }}
         >
-
           <IconUserCog className="mr-4" />
           <div className="text-lg font-semibold">Edit Profile</div>
         </Link>
+        {getRole && getRole === "mentee" && (
+          <Link
+            className={classes.link}
+            data-active={"edit" === active || undefined}
+            onClick={(event) => {
+              onClickHandler("/recommended", event);
+            }}
+          >
+            <IconUserCog className="mr-4" />
+            <div className="text-lg font-semibold">Recommended</div>
+          </Link>
+        )}
         {!user?.currentUser && (
           <Link
             className={`${classes.link} text-white hover:bg-blue-500 hover:text-white bg-blue-400`}

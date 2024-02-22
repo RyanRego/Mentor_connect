@@ -28,6 +28,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditMentorProfile from "./components/Form/EditMentorForm";
 import FeedbackForm from "./components/feedback-form/FeedbackForm";
+import RecommendedFeed from "./pages/RecommendedFeed/RecommendedFeed";
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
 // axios.defaults.baseURL = "https://mentor-connect.onrender.com/api";
@@ -92,6 +93,7 @@ const App = () => {
                 <Route path="/room/:roomId" element={<MentorCall/>}/>
 
                 <Route path="/edit-mentor" element={<EditMentorProfile />} />
+                <Route path="/recommended" element={<RecommendedFeed />} />
               </Routes>
             </div>
           </div>
