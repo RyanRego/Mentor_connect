@@ -29,6 +29,7 @@ import "react-toastify/dist/ReactToastify.css";
 import EditMentorProfile from "./components/Form/EditMentorForm";
 import FeedbackForm from "./components/feedback-form/FeedbackForm";
 import RecommendedFeed from "./pages/RecommendedFeed/RecommendedFeed";
+import MentorFeedback from "./pages/MentorFeedback/MentorFeedback";
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
 // axios.defaults.baseURL = "https://mentor-connect.onrender.com/api";
@@ -53,8 +54,6 @@ const App = () => {
           theme="light"
           transition:Bounce
         />
-        <ToastContainer />
-
         <div className="md:hidden flex items-center">
           <Burger
             opened={opened}
@@ -94,6 +93,7 @@ const App = () => {
                 <Route path="/edit-mentor" element={<EditMentorProfile />} />
                 {/* <Route path="/Notification" element={<Subscription />} /> */}
                 <Route path="/recommended" element={<RecommendedFeed />} />
+                <Route path="/MentorFeedback" element={<MentorFeedback />} />
               </Routes>
             </div>
           </div>

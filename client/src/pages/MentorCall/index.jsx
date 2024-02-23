@@ -14,7 +14,6 @@ const MentorCall = () => {
   const videoRef = useRef(null); // Reference to the video element // To track video stream activation
   const [error, setError] = useState(null); // To store any errors
   // const [btnPresses, setBtnPressed] = useState(false);
-  const [noFace, setNoFace] = useState(0);
   const [room, setRoom] = useState(true);
   const [showForm,setShowForm] = useState(false);
 
@@ -34,6 +33,7 @@ const MentorCall = () => {
         console.log(err);
       });
   };
+  const getRole = localStorage.getItem('role')
 
   const loadModels = async () => {
     Promise.all([faceapi.nets.tinyFaceDetector.loadFromUri("/models")]).then(
@@ -43,8 +43,9 @@ const MentorCall = () => {
       }
     );
   };
-
+  let NoFace = 0;
   const faceMyDetect = () => {
+
     const getRole = localStorage.getItem('role')
     console.log(getRole);
     setInterval(async () => {
@@ -57,18 +58,31 @@ const MentorCall = () => {
         console.log("Face detected. Good going Mentor");
       } else if(room === false) {
         console.log("No face detected");
-        setNoFace((prevTime) => prevTime + 1); // Increment no face time
-
-        if (noFace >= 10) { // Check if no face time exceeds 10 seconds
-          toast.error("Please ensure you are visible on camera to provide the best mentoring experience.");
-          setNoFace(0); // Reset no face time after showing toast
+        NoFace+=1; // Increment no face time
+        if (NoFace >= 15) { // Check if no face time exceeds 10 seconds
+          console.log("noface greater than 10")
+          if(getRole === 'mentor')
+          {
+            toast.error("Please ensure you are visible on camera to provide the best mentoring experience.");
+          }
+          NoFace=0 // Reset no face time after showing toast
         }
       }
       else
       {
         console.log(room);
         console.log("No Room No Face");
+        NoFace+=1; // Increment no face time
+        if (NoFace >= 15) { // Check if no face time exceeds 10 seconds
+          console.log("noface greater than 10")
+          if(getRole === 'mentor')
+          {
+            toast.error("Please ensure you are visible on camera to provide the best mentoring experience.");
+          }
+          NoFace=0 // Reset no face time after showing toast
+        }
       }
+      
     }, 1000);
   };
   const myMeeting = async (element) => {
@@ -167,7 +181,7 @@ const MentorCall = () => {
           </div>
         </div>}
         {
-          showForm && <FeedbackForm mentorId={roomId}/>
+          showForm && getRole === 'mentee' && <FeedbackForm mentorId={roomId}/>
         }
         {/* {
           setBtnPressed && (
