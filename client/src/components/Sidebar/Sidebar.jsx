@@ -1,14 +1,199 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
+// /* eslint-disable no-unused-vars */
+// /* eslint-disable react/prop-types */
+// import { useState } from "react";
+// import { Group, Code } from "@mantine/core";
+
+// import {
+//   IconBellRinging,
+//   IconLogout,
+//   IconUser,
+//   IconVideo,
+//   IconUserCog,
+// } from "@tabler/icons-react";
+
+// import classes from "./NavbarSimple.module.css";
+// import { Link, useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
+
+// export function Sidebar({ toggle }) {
+//   const [active, setActive] = useState("Billing");
+//   const user = useSelector((state) => state.user);
+
+//   const navigate = useNavigate();
+//   const getRole = localStorage.getItem("role");
+//   console.log(getRole);
+
+//   const onClickHandler = (label, event) => {
+//     event.preventDefault();
+//     setActive(label);
+//     if (!user?.currentUser) {
+//       navigate("/login");
+//     }
+//     navigate(label);
+//   };
+
+//   return (
+//     <nav className={`${classes.navbar} h-[100vh]`}>
+//       <div className={classes.navbarMain}>
+//         <Group className={classes.header} justify="space-between">
+//           {/* <MantineLogo size={28} /> */}
+//           <div className="font-bold text-[20px]">Mentor-Connect</div>
+//           <Code
+//             onClick={toggle}
+//             className="md:hidden cursor-pointer text-md font-bold"
+//             fw={700}
+//           >
+//             Close
+//           </Code>
+//         </Group>
+//         <Link
+//           className={classes.link}
+//           data-active={"Notification" === active || undefined}
+//           onClick={(event) => onClickHandler("/Notification", event)}
+//         >
+//           <IconBellRinging className="mr-4" />
+
+//           <div className="text-lg font-semibold">Notifications</div>
+//         </Link>
+//         {getRole && getRole === "mentor" ? (
+//           <Link
+//             className={classes.link}
+//             data-active={"mentor" === active || undefined}
+//             onClick={(event) => {
+//               onClickHandler("/dashboard", event);
+//             }}
+//           >
+//             <IconUser className="mr-4" />
+//             <div className="text-lg font-semibold">Mentor Dashboard</div>
+//           </Link>
+//         ) : (
+//           <Link
+//             className={classes.link}
+//             data-active={"mentor" === active || undefined}
+//             onClick={(event) => {
+//               onClickHandler("/", event);
+//             }}
+//           >
+//             <IconUser className="mr-4" />
+//             <div className="text-lg font-semibold">Find a mentor</div>
+//           </Link>
+//         )}
+//         <Link
+//           className={classes.link}
+//           data-active={"join" === active || undefined}
+//           onClick={(event) => {
+//             onClickHandler("/applications", event);
+//           }}
+//         >
+//           <IconVideo className="mr-4" />
+//           <div className="text-lg font-semibold">Join a meet</div>
+//         </Link>
+//         <Link
+//           className={classes.link}
+//           data-active={"edit" === active || undefined}
+//           onClick={(event) => {
+//             onClickHandler("/edit", event);
+//           }}
+//         >
+//           <IconUserCog className="mr-4" />
+//           <div className="text-lg font-semibold">Edit Profile</div>
+//         </Link>
+//         {getRole && getRole === "mentee" && (
+//           <Link
+//             className={classes.link}
+//             data-active={"edit" === active || undefined}
+//             onClick={(event) => {
+//               onClickHandler("/recommended", event);
+//             }}
+//           >
+//             <IconUserCog className="mr-4" />
+//             <div className="text-lg font-semibold">Recommended</div>
+//           </Link>
+//         )}
+//         {!user?.currentUser && (
+//           <Link
+//             className={`${classes.link} text-white hover:bg-blue-500 hover:text-white bg-blue-400`}
+//             data-active={"edit" === active || undefined}
+//             onClick={(event) => {
+//               onClickHandler("/signup", event);
+//             }}
+//           >
+//             <IconBellRinging className="mr-4" />
+//             <div className="text-lg font-semibold">Sign Up</div>
+//           </Link>
+//         )}
+//       </div>
+
+//       <div className={classes.footer}>
+//         <Link
+//           className={classes.link}
+//           onClick={(event) => {
+//             event.preventDefault();
+//             navigate(`/${getRole}/${user?.currentUser.email}` || "/login");
+//           }}
+//         >
+//           <img
+//             src="https://avatars.githubusercontent.com/u/81866624?v=4"
+//             alt="profile"
+//             className="w-8 h-8 mr-2 rounded-full"
+//           />
+//           <span>Profile</span>
+//         </Link>
+
+//         <a
+//           href="#"
+//           className={classes.link}
+//           onClick={(event) => event.preventDefault()}
+//         >
+//           <IconLogout className={classes.linkIcon} stroke={1.5} />
+//           {user?.currentUser === null ? (
+//             <span
+//               onClick={(event) => {
+//                 event.preventDefault();
+//                 navigate("/login");
+//               }}
+//             >
+//               Login
+//             </span>
+//           ) : (
+//             <span>Logout</span>
+//           )}
+//         </a>
+//       </div>
+//     </nav>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState } from "react";
-import { Group, Code } from "@mantine/core";
+import { Group } from "@mantine/core";
 
 import {
   IconBellRinging,
   IconLogout,
-  IconUser,
+  IconDashboard,
   IconVideo,
+  IconUserEdit,
+  IconLogin,
+  IconCirclesRelation,
+  IconX,
   IconUserCog,
+  IconUser
 } from "@tabler/icons-react";
 
 import classes from "./NavbarSimple.module.css";
@@ -33,70 +218,80 @@ export function Sidebar({ toggle }) {
   };
 
   return (
-    <nav className={`${classes.navbar} h-[100vh]`}>
+    <nav
+      className={`w-[320px] md:w-[261px] flex flex-col py-4 h-[100vh] text-gray-700 border-r border-gray-300`}
+    >
       <div className={classes.navbarMain}>
-        <Group className={classes.header} justify="space-between">
+        <Group
+          className={`${classes.header} md:justify-center`}
+          justify="space-between"
+        >
           {/* <MantineLogo size={28} /> */}
-          <div className="font-bold text-[20px]">Mentor-Connect</div>
-          <Code
+          <div className="px-1 text-blue-600 flex items-center ">
+            <IconCirclesRelation className="md:ml-2 ml-4 mr-2" size={36} />
+            <h1 className="font-bold text-xl hidden md:block brand-name">
+              Mentor-Connect
+            </h1>
+          </div>
+          <div
+            role="button"
             onClick={toggle}
             className="md:hidden cursor-pointer text-md font-bold"
-            fw={700}
           >
-            Close
-          </Code>
+            <IconX className="mx-4" size={36} />
+          </div>
         </Group>
         <Link
-          className={classes.link}
+          className={`${classes.link}`}
           data-active={"Notification" === active || undefined}
           onClick={(event) => onClickHandler("/Notification", event)}
         >
-          <IconBellRinging className="mr-4" />
+          <IconBellRinging className="mx-4" />
 
-          <div className="text-lg font-semibold">Notifications</div>
+          <div className="text-base font-semibold">Notifications</div>
         </Link>
         {getRole && getRole === "mentor" ? (
           <Link
-            className={classes.link}
+            className={`${classes.link}`}
             data-active={"mentor" === active || undefined}
             onClick={(event) => {
               onClickHandler("/dashboard", event);
             }}
           >
-            <IconUser className="mr-4" />
-            <div className="text-lg font-semibold">Mentor Dashboard</div>
+            <IconDashboard className="mx-4" />
+            <div className="text-base font-semibold">Mentor Dashboard</div>
           </Link>
         ) : (
           <Link
-            className={classes.link}
+            className={`${classes.link}`}
             data-active={"mentor" === active || undefined}
             onClick={(event) => {
               onClickHandler("/", event);
             }}
           >
-            <IconUser className="mr-4" />
-            <div className="text-lg font-semibold">Find a mentor</div>
+            <IconUserEdit className="mx-4" />
+            <div className="text-base font-semibold">Find a mentor</div>
           </Link>
         )}
         <Link
-          className={classes.link}
+          className={`${classes.link}`}
           data-active={"join" === active || undefined}
           onClick={(event) => {
             onClickHandler("/applications", event);
           }}
         >
-          <IconVideo className="mr-4" />
-          <div className="text-lg font-semibold">Join a meet</div>
+          <IconVideo className="mx-4" />
+          <div className="text-base font-semibold">Join a meet</div>
         </Link>
         <Link
-          className={classes.link}
+          className={`${classes.link}`}
           data-active={"edit" === active || undefined}
           onClick={(event) => {
             onClickHandler("/edit", event);
           }}
         >
-          <IconUserCog className="mr-4" />
-          <div className="text-lg font-semibold">Edit Profile</div>
+          <IconUserEdit className="mx-4" />
+          <div className="text-base font-semibold">Edit Profile</div>
         </Link>
         {getRole && getRole === "mentee" && (
           <Link
@@ -106,57 +301,60 @@ export function Sidebar({ toggle }) {
               onClickHandler("/recommended", event);
             }}
           >
-            <IconUserCog className="mr-4" />
-            <div className="text-lg font-semibold">Recommended</div>
+            <IconUser className="mx-4" />
+            <div className="text-base font-semibold">Recommended</div>
           </Link>
         )}
         {!user?.currentUser && (
           <Link
-            className={`${classes.link} text-white hover:bg-blue-500 hover:text-white bg-blue-400`}
+            className={`${classes.link}`}
             data-active={"edit" === active || undefined}
             onClick={(event) => {
               onClickHandler("/signup", event);
             }}
           >
-            <IconBellRinging className="mr-4" />
-            <div className="text-lg font-semibold">Sign Up</div>
+            <IconLogin className="mx-4" />
+            <div className="text-base font-semibold ">Sign Up</div>
           </Link>
         )}
       </div>
 
       <div className={classes.footer}>
         <Link
-          className={classes.link}
+          className={`${classes.link}`}
           onClick={(event) => {
             event.preventDefault();
-            navigate(`/${getRole}/${user?.currentUser.email}` || "/login");
+            navigate(
+              `/${getRole}/${user?.currentUser[`${getRole}`].email}` || "/login"
+            );
           }}
         >
           <img
             src="https://avatars.githubusercontent.com/u/81866624?v=4"
             alt="profile"
-            className="w-8 h-8 mr-2 rounded-full"
+            className="w-8 h-8 ml-4 mr-2 rounded-full"
           />
-          <span>Profile</span>
+          <span className="text-base font-semibold">Profile</span>
         </Link>
 
         <a
           href="#"
-          className={classes.link}
+          className={`${classes.link}`}
           onClick={(event) => event.preventDefault()}
         >
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
+          <IconLogout className="mx-4" />
           {user?.currentUser === null ? (
             <span
               onClick={(event) => {
                 event.preventDefault();
                 navigate("/login");
               }}
+              className="text-base font-semibold"
             >
               Login
             </span>
           ) : (
-            <span>Logout</span>
+            <span className="text-base font-semibold">Logout</span>
           )}
         </a>
       </div>
