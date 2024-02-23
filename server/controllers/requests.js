@@ -3,7 +3,7 @@ import Mentee from "../model/mentee.model.js";
 import { sendEmail } from "../utils/email.js";
 const acceptRequest = async (req, res) => {
     try {
-        const { mentorId, requestorId,time,date,code} = req.body;
+        const { mentorId, requestorId,time,date} = req.body;
         console.log(req.body);
         const mentor = await Mentor.findById(mentorId);
         const requestor = await Mentee.findById(requestorId);
@@ -21,15 +21,19 @@ const acceptRequest = async (req, res) => {
             message: "Your request has been accepted",
             time: time,
             date: date,
-            code: code,
+            code: mentorId,
         });
 
-        sendEmail(requestor.email, requestorName,mentorName, "Request Accepted", code);
+        await requestor.save();
+
+        sendEmail(requestor.email, requestorName,mentorName, "Request Accepted", mentorId);
         console.log("done it");
 
+        mentor.sessionRequest = mentor.sessionRequest.filter((request) => request.id !== requestorId);
+        await mentor.save();
+    
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 }
-
 export { acceptRequest };

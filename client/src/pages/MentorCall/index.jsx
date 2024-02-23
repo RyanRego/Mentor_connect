@@ -1,10 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import * as faceapi from "face-api.js";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {useSelector} from 'react-redux';
 import FeedbackForm from "../../components/feedback-form/FeedbackForm";
 
@@ -22,7 +21,6 @@ const MentorCall = () => {
   // Load face detection models (moved outside myMeeting for reusability)
   useEffect(() => {
     startVideo();
-
     videoRef && loadModels();
   }, []); // Run only once on component mount
 
@@ -106,6 +104,7 @@ const MentorCall = () => {
       },
       onLeaveRoom : () => {
         setShowForm(true)
+
         console.log("Room closed successfuly");
         setRoom((prevState) => !prevState);
         if (videoRef.current) {
@@ -114,7 +113,7 @@ const MentorCall = () => {
         }
         if(user?.currentUser?.role === 'mentee')
         {
-            navigate('/feedback');
+          navigate('/feedback');
         }
       }
     });
@@ -168,7 +167,7 @@ const MentorCall = () => {
           </div>
         </div>}
         {
-          showForm && <FeedbackForm/>
+          showForm && <FeedbackForm mentorId={roomId}/>
         }
         {/* {
           setBtnPressed && (

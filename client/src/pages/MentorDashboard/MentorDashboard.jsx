@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import MentorAllowCard from "../../components/MentorAllowCard/MentorAllowCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import MentorAllowCardTable from "../MentorDashboard/MentorAllowCardTable";
+
 const MentorDashboard = () => {
 
   const user = useSelector((state)=>state.user);
@@ -22,18 +23,14 @@ const MentorDashboard = () => {
   },[])
 
   return (
-    <main className="w-full flex flex-col gap-10 h-[95vh] overflow-auto text-gray-700 md:px-16">
-      <div className="w-full min-h-[90px] bg-blue-400 text-white rounded-md">
-        <div className="w-full  flex items-center font-bold text-[30px] p-5  tracking-wide">
-          Mentor Dashboard
-        </div>
+    <div className="pt-24 p-3 md:p-12 h-[100vh] overflow-auto text-gray-700">
+      <div className="p-6 bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-md shadow">
+        <h1 className="font-semibold text-4xl">Mentor Dashboard</h1>
       </div>
-      <div className="min-h-[100vh] w-full flex flex-col gap-7">
-        {sessions.map((item)=>(
-          <MentorAllowCard key={item.time} item={item}/>
-        ))}
+      <div className="mt-6 flex flex-col gap-6 border border-gray-300 bg-gray-50 p-6 rounded-lg">
+        <MentorAllowCardTable sessions={sessions} />
       </div>
-    </main>
+    </div>
   );
 };
 

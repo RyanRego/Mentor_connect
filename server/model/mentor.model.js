@@ -64,7 +64,21 @@ const mentorSchema = new Schema({
             code: String,
         }],
     },
-},
+    rating:{
+        numberOfRatings: {
+            type: Number,
+            default: 0
+        },
+        totalRating: {
+            type: Number,
+            default: 0
+        }
+    },
+    feedback: {
+        type: [{
+            review: String
+        }],
+    },},
     {
         timestamps: true
     }

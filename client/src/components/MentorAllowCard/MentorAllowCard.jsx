@@ -13,18 +13,16 @@ const MentorAllowCard = ({item}) => {
 
   const onAccepting = () => {
     //we have to navigate to specific route
-    const code = Math.floor(Math.random() * 1000000);
     axios.post('/request/acceptRequest', {
       mentorId: userId, 
       requestorId:requestor?._id,
       time: item.time,
       date: item.date,
-      code: code,
     })
 
-    if(code)
+    if(userId)
     {
-      navigate(`/room/${code}`);
+      navigate(`/room/${userId}`);
     }
   }
 

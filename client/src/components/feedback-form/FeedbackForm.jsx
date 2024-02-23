@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { Radio, Group } from "@mantine/core";
@@ -9,7 +10,7 @@ import StarRatingReview from "./StarRatingReview";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import axios from "axios";
 
-const FeedbackForm = () => {
+const FeedbackForm = ({mentorId}) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const totalQuestions = 8; // Total questions including Suggestions and Review
@@ -37,6 +38,7 @@ const FeedbackForm = () => {
   const submitForm = () => {
     console.log("Form submitted");
     axios.post("/feedback",{
+      mentorId,
       emoji,
       experience,
       preparation,
@@ -50,6 +52,7 @@ const FeedbackForm = () => {
     }).catch((err)=>{
       console.log(err)
     })
+    console.log(mentorId, "mentorId")
     close();
   }
 
