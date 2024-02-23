@@ -1,37 +1,43 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
+// export default FeedCard;
 /* eslint-disable react/prop-types */
-import { ActionIcon, Button, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import axios from "axios";
+import React from "react";
 import { useState } from "react";
+import {
+  IconStarFilled,
+  IconCurrencyRupee,
+  IconVideo,
+  IconMessage,
+  IconSquareCheck,
+} from "@tabler/icons-react";
 
-const FeedCard = ({ user, mentor }) => {
-  const [selectedDate, setSelectedDate] = useState('');
-  const [currTime, setCurrTime] = useState('');
-  const [opened, { open, close }] = useDisclosure(false);
+import DateTimePicker from "react-datetime-picker";
+import "react-datetime-picker/dist/DateTimePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
+import axios from 'axios';
+
+const FeedCard = ({user, mentor }) => {
+  const [value, onChange] = useState(new Date());
+  // console.log(value);
+  const getRole = localStorage.getItem('role');
+  console.log(getRole);
+
+  // const onChange = (date) => {
+  //   setDateTime(date); // Update state with the selected date and time
+  // };
 
   const onSubmit = async (id) => {
     // Ensure selectedDate is a Date object
-    const dateObject = new Date(selectedDate);
-  
-    // Format date as YYYY-MM-DD in UTC
-    const formattedDate = dateObject.toISOString().slice(0, 10);
-  
-    // Get current time in HH:MM format
-    const currentTime = new Date();
-    const hours = currentTime.getUTCHours().toString().padStart(2, '0');
-    const minutes = currentTime.getUTCMinutes().toString().padStart(2, '0');
-    const formattedTime = `${hours}:${minutes}`;
-  
-    console.log("date : ", formattedDate);
-    console.log("time : ", currTime);
-  
+    const formattedDate = value.toDateString(); // Convert to string format
+    const formattedTime = value.toLocaleTimeString();
+    console.log(formattedDate);
+    console.log(formattedTime);
+    console.log(user);
     axios.post('/requestmentor', {
       mentorId: id.toString(),
-      menteeId: user.currentUser.mentee._id.toString(),
+      menteeId: user.currentUser._id.toString(),
       date: formattedDate,
-      time: currTime
+      time: formattedTime
     }).then(({data})=>{
       console.log(data)
     }).catch((err)=>{
@@ -40,68 +46,79 @@ const FeedCard = ({ user, mentor }) => {
     close();
   }
 
-  // eslint-disable-next-line no-unused-vars
-  const makeRequestToMentor = (id) => {
-    open();
-  }
-
-
   return (
-    <div className="p-5 border-2 border-gray-300 rounded-lg hover:border-blue-400">
-       <Modal opened={opened} onClose={close} title="Select Date And Time">
-        {/* Modal content */}
-        <input
-          type="date"
-          className="block border p-2 rounded-md w-72"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          label="Date input"
-          placeholder="Date input"
-        />
-        <input
-          type="time"
-          className="mt-4 block border p-2 rounded-md w-72"
-          value={currTime}
-          onChange={(e) => setCurrTime(e.target.value)}
-          label="Select Time Slot"
-        />
-        <Button className="bg-blue-500 w-40 text-white rounded-md mt-6" onClick={()=>onSubmit(mentor._id)} variant="default">Submit</Button>
-      </Modal>
-      <div className=" flex justify-between border-b pb-5 border-gray-300">
-        <div className="flex gap-6  ">
-          <img src={mentor?.profilePicture || ProfilePhoto} className="h-24 rounded-lg" alt="profile" />
-          <div>
-            <h1 className="font-semibold text-xl">{mentor.firstName} {mentor.lastName}</h1>
-            <h3 className="text-gray-500">{mentor.currentlyWorkingAt}</h3>
-            <p className="text-sm mt-1 line-clamp-2 w-3/5">
-              {mentor.bio}
-            </p>
+    <div className="text-gray-700 flex flex-col mx-3 md:mx-0 md:flex-row shadow-sm border border-gray-300 rounded-lg bg-gray-50">
+      <div className=" md:w-2/3 border-b md:border-b-0 md:border-r border-gray-300">
+        <div className="flex gap-6 p-6">
+          <img
+            src={mentor?.profilePicture}
+            className="h-24 w-24 rounded-full"
+            alt="profile"
+          />
+          <div className="flex flex-col gap-2">
+            <h1 className="flex items-center font-semibold text-xl gap-4">
+              {mentor.firstName} {mentor.lastName}
+              <span className="flex items-center text-sm font-normal">
+                <IconStarFilled className="mr-2 text-yellow-600" size={16} />5
+              </span>
+            </h1>
+            <p>{mentor.currentlyWorkingAt}</p>
+            <p className="text-sm line-clamp-2">{mentor.bio}</p>
+          </div>
+        </div>
+        <div className="border-t border-gray-300 p-6">
+          <div className="">
+            <span className="text-lg font-semibold">Expertise areas</span>
+            <div className="flex gap-4 flex-wrap mt-2 text-sm">
+              {mentor?.proficiency?.map((prof) => (
+                <div
+                  key={prof}
+                  className="flex items-center font-semibold px-2 py-1 rounded-lg border border-gray-300 shadow-sm bg-white"
+                >
+                  {prof}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-center border-b py-5 border-gray-300">
-        <div className="flex  gap-4 items-center">
-          <span className="font-semibold">Profieciency: </span>
-          <div className="flex flex-wrap w-44 gap-2">
-            {mentor?.proficiency?.map((prof) => (
-              <div key={prof} className="px-2 py-1 border border-gray-300 rounded-full text-sm">
-                {prof}
-              </div>
-            ))}
-          </div>
+
+      <div className="md:w-1/3 p-6 flex flex-col justify-between bg-green-50 gap-4">
+        <div>
+          <p className="flex text-sm items-center">
+            <IconVideo className="mr-4" />
+            one to one vedio call
+          </p>
+          <p className="flex text-sm items-center">
+            <IconSquareCheck className="mr-4" />
+            get resources to follow
+          </p>
+          <p className="flex text-sm items-center">
+            <IconMessage className="mr-4" />
+            chat with mentor
+          </p>
         </div>
-      </div>
-      <div className="pt-4 flex flex-col md:flex-row md:justify-between items-center gap-4">
-        <button className="py-2.5 w-full md:w-auto px-4 bg-gray-400 rounded-lg font-semibold text-white ">
-          View Profile
-        </button>
+        <span className="flex items-center text-2xl font-semibold">
+          <IconCurrencyRupee />
+          {mentor.rateOfMentorship}
+          <span className="text-base font-normal">/hr</span>
+        </span>
 
-        <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-semibold">
-            {mentor.rateOfMentorship}rs <span className="text-base font-normal">/hr</span>
-          </h1>
+        <div className="flex flex-col gap-4">
+          <button className="px-4 h-9 shadow-sm hover:bg-gray-50 bg-white border border-gray-300 rounded-lg font-semibold">
+            View Profile
+          </button>
 
-          <button onClick={()=>makeRequestToMentor()} className="py-2.5 px-4 bg-green-400 rounded-lg font-semibold text-white ">
+          <div className="flex justify-center flex-col">
+            <p className="font-semibold mb-2 text-sm">Pick a time slot</p>
+            <DateTimePicker
+              className="bg-white"
+              onChange={onChange}
+              value={value}
+            />
+          </div>
+
+          <button className="px-4 h-9 shadow-sm bg-green-700 rounded-lg text-white font-semibold" onClick={() => onSubmit(mentor._id)}>
             Book a session
           </button>
         </div>
@@ -111,3 +128,4 @@ const FeedCard = ({ user, mentor }) => {
 };
 
 export default FeedCard;
+

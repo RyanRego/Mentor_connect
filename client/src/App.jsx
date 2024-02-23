@@ -86,13 +86,13 @@ const App = () => {
 
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
-
-                <Route path="/feedback" element={<FeedbackForm/>}/>
+                <Route path="/feedback" element={<FeedbackForm />} />
                 <Route path="/dashboard" element={<MentorDashboard />} />
 
-                <Route path="/room/:roomId" element={<MentorCall/>}/>
+                <Route path="/room/:roomId" element={<MentorCall />} />
 
                 <Route path="/edit-mentor" element={<EditMentorProfile />} />
+                {/* <Route path="/Notification" element={<Subscription />} /> */}
                 <Route path="/recommended" element={<RecommendedFeed />} />
               </Routes>
             </div>
