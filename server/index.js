@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import Mentor from './model/mentor.model.js'
 import mongoose from "mongoose";
 import mentorAuth from "./routes/mentor/auth.js"; 
 import menteeAuth from "./routes/mentee/auth.js";
@@ -49,6 +50,26 @@ app.use('/api/get-recommended',getRecommended);
 
 //get feedback from mentee
 app.use('/api/feedback',giveFeedback);
+
+
+//fetch feedback for the mentors from mentees
+app.use('/api/fetch-feedback', async (req, res) => {
+    try {
+      const { mentorId } = req.body; // Destructure mentorId from the request body
+  
+      // Find the mentor by mentorId and select the feedback field
+      const mentor = await Mentor.findById(mentorId, 'feedback');
+  
+      if (!mentor) {
+        return res.status(404).json({ message: 'Mentor not found' });
+      }
+  
+      res.json(mentor.feedback); // Send the feedback array as the response
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
 
 app.listen(PORT, () => {
     console.log(`Server listening on port : ${PORT}`);

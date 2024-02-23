@@ -21,7 +21,6 @@ import { useSelector } from "react-redux";
 export function Sidebar({ toggle }) {
   const [active, setActive] = useState("Billing");
   const user = useSelector((state) => state.user);
-
   const navigate = useNavigate();
   const getRole = localStorage.getItem("role");
   console.log(getRole);
@@ -59,7 +58,8 @@ export function Sidebar({ toggle }) {
             <IconX className="mx-4" size={36} />
           </div>
         </Group>
-        <Link
+        {getRole && getRole === 'mentee' ? (
+          <Link
           className={`${classes.link}`}
           data-active={"Notification" === active || undefined}
           onClick={(event) => onClickHandler("/Notification", event)}
@@ -68,6 +68,17 @@ export function Sidebar({ toggle }) {
 
           <div className="text-base font-semibold">Notifications</div>
         </Link>
+        ) : (
+          <Link
+          className={`${classes.link}`}
+          data-active={"Notification" === active || undefined}
+          onClick={(event) => onClickHandler("/MentorFeedback", event)}
+        >
+          <IconBellRinging className="mx-4" />
+
+          <div className="text-base font-semibold">Feedback</div>
+        </Link>
+        )}
         {getRole && getRole === "mentor" ? (
           <Link
             className={`${classes.link}`}
