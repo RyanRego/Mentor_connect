@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
 const EditProfileForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [bio, setBio] = useState("");
   const [guidanceTopics, setGuidanceTopics] = useState("");
+    // eslint-disable-next-line no-unused-vars
 
   const navigate = useNavigate();
   // const user = useSelector((state) => state.user);
@@ -19,9 +20,12 @@ const EditProfileForm = () => {
       navigate("/edit-mentor");
     }
   };
+
+
   useEffect(() => {
     navigateIt();
   }, []);
+
   const saveChanges = (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
