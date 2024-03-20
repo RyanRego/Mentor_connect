@@ -26,7 +26,7 @@ const MentorFeedback = () => {
         {feedback && feedback.map((feed, index) => (
         <div key={index} className="feedback-item">
           {/* Render feedback item */}
-          <p>{feed.review}</p>
+          <p className='p-4 rounded-md bg-gray-200 mb-4'>{feed.review}</p>
         </div>
       ))}{
         !feedback && <div>Nothing to show</div>

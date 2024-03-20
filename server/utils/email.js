@@ -13,7 +13,7 @@ const sendEmail = (recipentEmail,recipentName,sendername,status,code) => {
     // Define email content
     let mailOptions = {
       from: "mentorconnect@gmail.com",
-      to: "ryanrego14@gmail.com", 
+      to: "tajmalnas36@gmail.com", 
       subject: `${sendername} has ${status} your request.`, 
       html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
