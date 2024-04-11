@@ -1,4 +1,5 @@
 
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Group } from "@mantine/core";
 
@@ -11,7 +12,6 @@ import {
   IconLogin,
   IconCirclesRelation,
   IconX,
-  IconUserCog,
   IconUser
 } from "@tabler/icons-react";
 
@@ -155,7 +155,7 @@ export function Sidebar({ toggle }) {
           onClick={(event) => {
             event.preventDefault();
             navigate(
-              `/${getRole}/${user?.currentUser[`${getRole}`].email}` || "/login"
+              `/${getRole}/${user?.currentUser.email}` || "/login"
             );
           }}
         >

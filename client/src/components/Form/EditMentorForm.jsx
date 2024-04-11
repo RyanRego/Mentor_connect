@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -13,13 +13,8 @@ const EditMentorProfile = () => {
     const [rateOfMentorship, setRateOfMentorship] = useState("");
 
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const formData = new FormData(event.target);
-    //     const guidanceTopics = formData.get("guidanceTopics").split(",").map(topic => topic.trim()); // Split input value by commas
-    //     // Send formData including guidanceTopics array to the backend
-    //   };
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
     const handleSubmit = (event) => {
         event.preventDefault();
         // if(!firstName || !lastName || !currentlyWorkingAt || !bio || !proficiency || !rateOfMentorship){
