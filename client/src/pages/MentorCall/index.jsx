@@ -90,8 +90,8 @@ const MentorCall = () => {
     if (error) {
       return <div>Error loading face detection model: {error.message}</div>;
     }
-    const appId = 1118000397;
-    const serverSecret = "282ab140579e78a3eab87dd7e3603c2e";
+    const appId = 1719844033;
+    const serverSecret = "d120489f74f9ae1dd4342d225abb529b";
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appId,
       serverSecret,
